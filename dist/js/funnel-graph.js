@@ -171,6 +171,7 @@ function () {
     this.labels = FunnelGraph.getLabels(options);
     this.subLabels = FunnelGraph.getSubLabels(options);
     this.values = FunnelGraph.getValues(options);
+    this.values_label = options.data && options.data.values_label || FunnelGraph.getValues(options);
     this.percentages = this.createPercentages();
     this.colors = options.data.colors || (0, _graph.getDefaultColors)(this.is2d() ? this.getSubDataSize() : 2);
     this.displayPercent = options.displayPercent || false;
@@ -178,6 +179,8 @@ function () {
     this.height = options.height;
     this.width = options.width;
     this.subLabelValue = options.subLabelValue || 'percent';
+    this.status_leads = options.data.status_leads || [];
+    this.projetado = options.data.projetado || [];
   }
   /**
   An example of a two-dimensional funnel graph
@@ -318,20 +321,48 @@ function () {
       var holder = document.createElement('div');
       holder.setAttribute('class', 'svg-funnel-js__labels');
       this.percentages.forEach(function (percentage, index) {
-        var labelElement = document.createElement('div');
+        var labelElement = document.createElement('a');
         labelElement.setAttribute('class', "svg-funnel-js__label label-".concat(index + 1));
+
+        labelElement.onclick = function () {
+          var filter = window.location.search.replace('?filter=', '');
+          filter = filter.replace(/imb_id/g, 'imobiliaria').replace(/tpng_id/g, 'tipo_interesse').replace('tmstmpopt', 'filterdate').replace('calendar_date_init', 'updatedAt_ini').replace('calendar_date_end', 'updatedAt_fim').replace(/(\d{2})-(\d{2})-(\d{4})/, '$1/$2/$3');
+
+          if (filter) {
+            filter += "&forceallleads=true&from=dashboard&cliente_interessado_passou_pelo_status=".concat(_this.status_leads[index], "&cliente_interessado_passou_pelo_status.label=").concat(_this.labels[index]);
+          } else {
+            filter = "&forceallleads=true&from=dashboard&cliente_interessado_passou_pelo_status=".concat(_this.status_leads[index], "&cliente_interessado_passou_pelo_status.label=").concat(_this.labels[index]);
+          }
+
+          window.location.href = "".concat(window.location.origin, "/app/clientesinteressados?filter=").concat(filter);
+        };
+
         var title = document.createElement('div');
-        title.setAttribute('class', 'label__title');
+        title.setAttribute('class', "label__title label-color-".concat(index + 1));
         title.textContent = _this.labels[index] || '';
         var value = document.createElement('div');
         value.setAttribute('class', 'label__value');
-        var valueNumber = _this.is2d() ? _this.getValues2d()[index] : _this.values[index];
-        value.textContent = (0, _number.formatNumber)(valueNumber);
+        var projectedValue = document.createElement('span');
+        projectedValue.setAttribute('class', "label__projected__value projected__value-".concat(index + 1));
+        var realizedValue = document.createElement('span');
+        realizedValue.setAttribute('class', 'label__realized__value');
+        var valueNumber1 = _this.values_label[index][1];
+        realizedValue.textContent = (0, _number.formatNumber)(valueNumber1);
+        var valueNumber2 = _this.values_label[index][0];
+        projectedValue.textContent = "/".concat((0, _number.formatNumber)(valueNumber2));
+        var percent = valueNumber1 / _this.values_label[0][1] * 100;
+        if (percent === 'Infinity' || percent === Infinity) percent = 100;
+        if (Number.isNaN(percent)) percent = 0;
         var percentageValue = document.createElement('div');
-        percentageValue.setAttribute('class', 'label__percentage');
-        percentageValue.textContent = "".concat(percentage.toString(), "%");
-        labelElement.appendChild(value);
+        percentageValue.setAttribute('class', "label__percentage percentage__label-".concat(index + 1));
+        percentageValue.textContent = "".concat(percent.toLocaleString('pt-BR', {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2
+        }), "%");
+        value.appendChild(realizedValue);
+        value.appendChild(projectedValue);
         labelElement.appendChild(title);
+        labelElement.appendChild(value);
 
         if (_this.displayPercent) {
           labelElement.appendChild(percentageValue);
@@ -342,11 +373,27 @@ function () {
           segmentPercentages.setAttribute('class', 'label__segment-percentages');
           var percentageList = '<ul class="segment-percentage__list">';
 
-          var twoDimPercentages = _this.getPercentages2d();
+          var twoDimPercentages = _this.projetado[index + 1].toLocaleString('pt-BR', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 2
+          });
+
+          var percentageRealizado = valueNumber1 / valueNumber2 * 100;
+          if (percentageRealizado === 'Infinity' || percentageRealizado === Infinity) percentageRealizado = 100;
+          if (Number.isNaN(percentageRealizado)) percentageRealizado = 0;
+          var percentageFinal = percentageRealizado.toLocaleString('pt-BR', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 2
+          });
 
           _this.subLabels.forEach(function (subLabel, j) {
-            var subLabelDisplayValue = _this.subLabelValue === 'percent' ? "".concat(twoDimPercentages[index][j], "%") : (0, _number.formatNumber)(_this.values[index][j]);
-            percentageList += "<li>".concat(_this.subLabels[j], ":\n    <span class=\"percentage__list-label\">").concat(subLabelDisplayValue, "</span>\n </li>");
+            var subLabelDisplayValue = _this.subLabelValue === 'percent' ? "".concat(twoDimPercentages, "%") : (0, _number.formatNumber)(_this.values[index][j]);
+
+            if (j === 0) {
+              percentageList += "\n                    <li>Projetado:\n                        <span class=\"percentage__list-label\">".concat(subLabelDisplayValue, "</span>\n                    </li>");
+            } else {
+              percentageList += "\n                    <li>Realizado:\n                        <span class=\"percentage__list-label\">".concat(percentageFinal, "%</span>\n                    </li>");
+            }
           });
 
           percentageList += '</ul>';
@@ -394,6 +441,7 @@ function () {
       }
 
       this.container.classList.add('svg-funnel-js');
+      this.container.innerHTML = '';
       this.graphContainer = document.createElement('div');
       this.graphContainer.classList.add('svg-funnel-js__container');
       this.container.appendChild(this.graphContainer);
@@ -905,7 +953,7 @@ var roundPoint = function roundPoint(number) {
 exports.roundPoint = roundPoint;
 
 var formatNumber = function formatNumber(number) {
-  return Number(number).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+  return Number(number).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
 };
 
 exports.formatNumber = formatNumber;

@@ -17,6 +17,7 @@ class FunnelGraph {
         this.labels = FunnelGraph.getLabels(options);
         this.subLabels = FunnelGraph.getSubLabels(options);
         this.values = FunnelGraph.getValues(options);
+        this.values_label = options.data && options.data.values_label || FunnelGraph.getValues(options);
         this.percentages = this.createPercentages();
         this.colors = options.data.colors || getDefaultColors(this.is2d() ? this.getSubDataSize() : 2);
         this.displayPercent = options.displayPercent || false;
@@ -24,7 +25,10 @@ class FunnelGraph {
         this.height = options.height;
         this.width = options.width;
         this.subLabelValue = options.subLabelValue || 'percent';
+        this.status_leads = options.data.status_leads || [];
+        this.projetado = options.data.projetado || [];
     }
+
 
     /**
     An example of a two-dimensional funnel graph
@@ -68,6 +72,7 @@ class FunnelGraph {
         // get half of the graph container height or width, since funnel shape is symmetric
         // we use this when calculating the "A" shape
         const dimension = fullDimension / 2;
+
         if (this.is2d()) {
             const totalValues = this.getValues2d();
             const max = Math.max(...totalValues);
@@ -166,25 +171,55 @@ class FunnelGraph {
         holder.setAttribute('class', 'svg-funnel-js__labels');
 
         this.percentages.forEach((percentage, index) => {
-            const labelElement = document.createElement('div');
+            const labelElement = document.createElement('a');
             labelElement.setAttribute('class', `svg-funnel-js__label label-${index + 1}`);
+            labelElement.onclick = () => {
+                let filter = window.location.search.replace('?filter=', '');
+                filter = filter.replace(/imb_id/g, 'imobiliaria').replace(/tpng_id/g, 'tipo_interesse').replace('tmstmpopt', 'filterdate').replace('calendar_date_init', 'updatedAt_ini')
+                .replace('calendar_date_end', 'updatedAt_fim')
+                .replace(/(\d{2})-(\d{2})-(\d{4})/, '$1/$2/$3');
 
+                if (filter) {
+                    filter += `&forceallleads=true&from=dashboard&cliente_interessado_passou_pelo_status=${this.status_leads[index]}&cliente_interessado_passou_pelo_status.label=${this.labels[index]}`;
+                } else {
+                    filter = `&forceallleads=true&from=dashboard&cliente_interessado_passou_pelo_status=${this.status_leads[index]}&cliente_interessado_passou_pelo_status.label=${this.labels[index]}`;
+                }
+
+                window.location.href = `${window.location.origin}/app/clientesinteressados?filter=${filter}`;
+            }
             const title = document.createElement('div');
-            title.setAttribute('class', 'label__title');
+            title.setAttribute('class', `label__title label-color-${index + 1}`);
             title.textContent = this.labels[index] || '';
 
             const value = document.createElement('div');
             value.setAttribute('class', 'label__value');
 
-            const valueNumber = this.is2d() ? this.getValues2d()[index] : this.values[index];
-            value.textContent = formatNumber(valueNumber);
+            const projectedValue = document.createElement('span');
+            projectedValue.setAttribute('class', `label__projected__value projected__value-${index + 1}`);
+
+            const realizedValue = document.createElement('span');
+            realizedValue.setAttribute('class', 'label__realized__value');
+
+            const valueNumber1 = this.values_label[index][1];
+            realizedValue.textContent = formatNumber(valueNumber1);
+
+            const valueNumber2 = this.values_label[index][0];
+            projectedValue.textContent = `/${formatNumber(valueNumber2)}`;
+
+            let percent = (valueNumber1 / this.values_label[0][1]) * 100;
+            if (percent === 'Infinity' || percent === Infinity) percent = 100;
+            if (Number.isNaN(percent)) percent = 0;
+
 
             const percentageValue = document.createElement('div');
-            percentageValue.setAttribute('class', 'label__percentage');
-            percentageValue.textContent = `${percentage.toString()}%`;
+            percentageValue.setAttribute('class', `label__percentage percentage__label-${index + 1}`);
+            percentageValue.textContent = `${percent.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}%`;
 
-            labelElement.appendChild(value);
+            value.appendChild(realizedValue);
+            value.appendChild(projectedValue);
+
             labelElement.appendChild(title);
+            labelElement.appendChild(value);
             if (this.displayPercent) {
                 labelElement.appendChild(percentageValue);
             }
@@ -193,16 +228,31 @@ class FunnelGraph {
                 const segmentPercentages = document.createElement('div');
                 segmentPercentages.setAttribute('class', 'label__segment-percentages');
                 let percentageList = '<ul class="segment-percentage__list">';
+            
+                
+                const twoDimPercentages = this.projetado[index + 1].toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
 
-                const twoDimPercentages = this.getPercentages2d();
+                let percentageRealizado = (valueNumber1 / valueNumber2) * 100;
+                if (percentageRealizado === 'Infinity' || percentageRealizado === Infinity) percentageRealizado = 100;
+                if (Number.isNaN(percentageRealizado)) percentageRealizado = 0;
+            
+                const percentageFinal = percentageRealizado.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
 
                 this.subLabels.forEach((subLabel, j) => {
                     const subLabelDisplayValue = this.subLabelValue === 'percent'
-                        ? `${twoDimPercentages[index][j]}%`
+                        ? `${twoDimPercentages}%`
                         : formatNumber(this.values[index][j]);
-                    percentageList += `<li>${this.subLabels[j]}:
-    <span class="percentage__list-label">${subLabelDisplayValue}</span>
- </li>`;
+                    if (j === 0) {
+                        percentageList += `
+                    <li>Projetado:
+                        <span class="percentage__list-label">${subLabelDisplayValue}</span>
+                    </li>`;
+                    } else {
+                        percentageList += `
+                    <li>Realizado:
+                        <span class="percentage__list-label">${percentageFinal}%</span>
+                    </li>`;
+                    } 
                 });
                 percentageList += '</ul>';
                 segmentPercentages.innerHTML = percentageList;
@@ -252,6 +302,7 @@ class FunnelGraph {
         }
 
         this.container.classList.add('svg-funnel-js');
+        this.container.innerHTML = '';
 
         this.graphContainer = document.createElement('div');
         this.graphContainer.classList.add('svg-funnel-js__container');
