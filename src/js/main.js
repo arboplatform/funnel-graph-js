@@ -187,6 +187,10 @@ class FunnelGraph {
 
                 window.location.href = `${window.location.origin}/app/clientesinteressados?filter=${filter}`;
             }
+            const passadoPor = document.createElement('div');
+            passadoPor.setAttribute('class', 'label__status_pass');
+            passadoPor.textContent = 'Passaram por';
+
             const title = document.createElement('div');
             title.setAttribute('class', `label__title label-color-${index + 1}`);
             title.textContent = this.labels[index] || '';
@@ -194,17 +198,35 @@ class FunnelGraph {
             const value = document.createElement('div');
             value.setAttribute('class', 'label__value');
 
-            const projectedValue = document.createElement('span');
+            const projectedValue = document.createElement('div');
             projectedValue.setAttribute('class', `label__projected__value projected__value-${index + 1}`);
 
-            const realizedValue = document.createElement('span');
-            realizedValue.setAttribute('class', 'label__realized__value');
 
-            const valueNumber1 = this.values_label[index][1];
-            realizedValue.textContent = formatNumber(valueNumber1);
+            const spanProjected1 = document.createElement('span');
+            const spanProjected2 = document.createElement('span');
 
-            const valueNumber2 = this.values_label[index][0];
-            projectedValue.textContent = `/${formatNumber(valueNumber2)}`;
+            const valueNumber2 = this.is2d() ? this.values_label[index][0] : '';
+            if (valueNumber2) {
+                spanProjected1.textContent = 'Meta:';
+                spanProjected2.textContent = formatNumber(valueNumber2);
+                projectedValue.appendChild(spanProjected1);
+                projectedValue.appendChild(spanProjected2);
+            }
+        
+
+            const realizedValue = document.createElement('div');
+            realizedValue.setAttribute('class', `label__realized__value realized__value-${index + 1}`);
+
+            const spanRealized1 = document.createElement('span');
+            const spanRealized2 = document.createElement('span');
+
+            const valueNumber1 = this.is2d() ? this.values_label[index][1] : this.values_label[index][0];
+            spanRealized1.textContent = 'Alcançado:';
+            spanRealized2.textContent = formatNumber(valueNumber1);
+
+            realizedValue.appendChild(spanRealized1);
+            realizedValue.appendChild(spanRealized2);
+
 
             let percent = (valueNumber1 / this.values_label[0][1]) * 100;
             if (percent === 'Infinity' || percent === Infinity) percent = 100;
@@ -215,49 +237,51 @@ class FunnelGraph {
             percentageValue.setAttribute('class', `label__percentage percentage__label-${index + 1}`);
             percentageValue.textContent = `${percent.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}%`;
 
-            value.appendChild(realizedValue);
-            value.appendChild(projectedValue);
 
+            value.appendChild(projectedValue);
+            value.appendChild(realizedValue);
+
+            labelElement.appendChild(passadoPor);
             labelElement.appendChild(title);
             labelElement.appendChild(value);
-            if (this.displayPercent) {
-                labelElement.appendChild(percentageValue);
-            }
+            // if (this.displayPercent) {
+            //     labelElement.appendChild(percentageValue);
+            // }
 
-            if (this.is2d()) {
-                const segmentPercentages = document.createElement('div');
-                segmentPercentages.setAttribute('class', 'label__segment-percentages');
-                let percentageList = '<ul class="segment-percentage__list">';
+            // if (this.is2d()) {
+            //     const segmentPercentages = document.createElement('div');
+            //     segmentPercentages.setAttribute('class', 'label__segment-percentages');
+            //     let percentageList = '<ul class="segment-percentage__list">';
             
                 
-                const twoDimPercentages = this.projetado[index + 1].toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+            //     const twoDimPercentages = this.projetado[index + 1].toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
 
-                let percentageRealizado = (valueNumber1 / valueNumber2) * 100;
-                if (percentageRealizado === 'Infinity' || percentageRealizado === Infinity) percentageRealizado = 100;
-                if (Number.isNaN(percentageRealizado)) percentageRealizado = 0;
+            //     let percentageRealizado = (valueNumber1 / valueNumber2) * 100;
+            //     if (percentageRealizado === 'Infinity' || percentageRealizado === Infinity) percentageRealizado = 100;
+            //     if (Number.isNaN(percentageRealizado)) percentageRealizado = 0;
             
-                const percentageFinal = percentageRealizado.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+            //     const percentageFinal = percentageRealizado.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
 
-                this.subLabels.forEach((subLabel, j) => {
-                    const subLabelDisplayValue = this.subLabelValue === 'percent'
-                        ? `${twoDimPercentages}%`
-                        : formatNumber(this.values[index][j]);
-                    if (j === 0) {
-                        percentageList += `
-                    <li>Projetado:
-                        <span class="percentage__list-label">${subLabelDisplayValue}</span>
-                    </li>`;
-                    } else {
-                        percentageList += `
-                    <li>Realizado:
-                        <span class="percentage__list-label">${percentageFinal}%</span>
-                    </li>`;
-                    } 
-                });
-                percentageList += '</ul>';
-                segmentPercentages.innerHTML = percentageList;
-                labelElement.appendChild(segmentPercentages);
-            }
+            //     this.subLabels.forEach((subLabel, j) => {
+            //         const subLabelDisplayValue = this.subLabelValue === 'percent'
+            //             ? `${twoDimPercentages}%`
+            //             : formatNumber(this.values[index][j]);
+            //         if (j === 0) {
+            //             percentageList += `
+            //         <li>Projetado:
+            //             <span class="percentage__list-label">${subLabelDisplayValue}</span>
+            //         </li>`;
+            //         } else {
+            //             percentageList += `
+            //         <li>Realizado:
+            //             <span class="percentage__list-label">${percentageFinal}%</span>
+            //         </li>`;
+            //         } 
+            //     });
+            //     percentageList += '</ul>';
+            //     segmentPercentages.innerHTML = percentageList;
+            //     labelElement.appendChild(segmentPercentages);
+            // }
 
             holder.appendChild(labelElement);
         });

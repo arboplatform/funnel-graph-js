@@ -337,19 +337,36 @@ function () {
           window.location.href = "".concat(window.location.origin, "/app/clientesinteressados?filter=").concat(filter);
         };
 
+        var passadoPor = document.createElement('div');
+        passadoPor.setAttribute('class', 'label__status_pass');
+        passadoPor.textContent = 'Passaram por';
         var title = document.createElement('div');
         title.setAttribute('class', "label__title label-color-".concat(index + 1));
         title.textContent = _this.labels[index] || '';
         var value = document.createElement('div');
         value.setAttribute('class', 'label__value');
-        var projectedValue = document.createElement('span');
+        var projectedValue = document.createElement('div');
         projectedValue.setAttribute('class', "label__projected__value projected__value-".concat(index + 1));
-        var realizedValue = document.createElement('span');
-        realizedValue.setAttribute('class', 'label__realized__value');
-        var valueNumber1 = _this.values_label[index][1];
-        realizedValue.textContent = (0, _number.formatNumber)(valueNumber1);
-        var valueNumber2 = _this.values_label[index][0];
-        projectedValue.textContent = "/".concat((0, _number.formatNumber)(valueNumber2));
+        var spanProjected1 = document.createElement('span');
+        var spanProjected2 = document.createElement('span');
+        var valueNumber2 = _this.is2d() ? _this.values_label[index][0] : '';
+
+        if (valueNumber2) {
+          spanProjected1.textContent = 'Meta:';
+          spanProjected2.textContent = (0, _number.formatNumber)(valueNumber2);
+          projectedValue.appendChild(spanProjected1);
+          projectedValue.appendChild(spanProjected2);
+        }
+
+        var realizedValue = document.createElement('div');
+        realizedValue.setAttribute('class', "label__realized__value realized__value-".concat(index + 1));
+        var spanRealized1 = document.createElement('span');
+        var spanRealized2 = document.createElement('span');
+        var valueNumber1 = _this.is2d() ? _this.values_label[index][1] : _this.values_label[index][0];
+        spanRealized1.textContent = 'Alcançado:';
+        spanRealized2.textContent = (0, _number.formatNumber)(valueNumber1);
+        realizedValue.appendChild(spanRealized1);
+        realizedValue.appendChild(spanRealized2);
         var percent = valueNumber1 / _this.values_label[0][1] * 100;
         if (percent === 'Infinity' || percent === Infinity) percent = 100;
         if (Number.isNaN(percent)) percent = 0;
@@ -359,47 +376,42 @@ function () {
           minimumFractionDigits: 0,
           maximumFractionDigits: 2
         }), "%");
-        value.appendChild(realizedValue);
         value.appendChild(projectedValue);
+        value.appendChild(realizedValue);
+        labelElement.appendChild(passadoPor);
         labelElement.appendChild(title);
-        labelElement.appendChild(value);
-
-        if (_this.displayPercent) {
-          labelElement.appendChild(percentageValue);
-        }
-
-        if (_this.is2d()) {
-          var segmentPercentages = document.createElement('div');
-          segmentPercentages.setAttribute('class', 'label__segment-percentages');
-          var percentageList = '<ul class="segment-percentage__list">';
-
-          var twoDimPercentages = _this.projetado[index + 1].toLocaleString('pt-BR', {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 2
-          });
-
-          var percentageRealizado = valueNumber1 / valueNumber2 * 100;
-          if (percentageRealizado === 'Infinity' || percentageRealizado === Infinity) percentageRealizado = 100;
-          if (Number.isNaN(percentageRealizado)) percentageRealizado = 0;
-          var percentageFinal = percentageRealizado.toLocaleString('pt-BR', {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 2
-          });
-
-          _this.subLabels.forEach(function (subLabel, j) {
-            var subLabelDisplayValue = _this.subLabelValue === 'percent' ? "".concat(twoDimPercentages, "%") : (0, _number.formatNumber)(_this.values[index][j]);
-
-            if (j === 0) {
-              percentageList += "\n                    <li>Projetado:\n                        <span class=\"percentage__list-label\">".concat(subLabelDisplayValue, "</span>\n                    </li>");
-            } else {
-              percentageList += "\n                    <li>Realizado:\n                        <span class=\"percentage__list-label\">".concat(percentageFinal, "%</span>\n                    </li>");
-            }
-          });
-
-          percentageList += '</ul>';
-          segmentPercentages.innerHTML = percentageList;
-          labelElement.appendChild(segmentPercentages);
-        }
+        labelElement.appendChild(value); // if (this.displayPercent) {
+        //     labelElement.appendChild(percentageValue);
+        // }
+        // if (this.is2d()) {
+        //     const segmentPercentages = document.createElement('div');
+        //     segmentPercentages.setAttribute('class', 'label__segment-percentages');
+        //     let percentageList = '<ul class="segment-percentage__list">';
+        //     const twoDimPercentages = this.projetado[index + 1].toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+        //     let percentageRealizado = (valueNumber1 / valueNumber2) * 100;
+        //     if (percentageRealizado === 'Infinity' || percentageRealizado === Infinity) percentageRealizado = 100;
+        //     if (Number.isNaN(percentageRealizado)) percentageRealizado = 0;
+        //     const percentageFinal = percentageRealizado.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+        //     this.subLabels.forEach((subLabel, j) => {
+        //         const subLabelDisplayValue = this.subLabelValue === 'percent'
+        //             ? `${twoDimPercentages}%`
+        //             : formatNumber(this.values[index][j]);
+        //         if (j === 0) {
+        //             percentageList += `
+        //         <li>Projetado:
+        //             <span class="percentage__list-label">${subLabelDisplayValue}</span>
+        //         </li>`;
+        //         } else {
+        //             percentageList += `
+        //         <li>Realizado:
+        //             <span class="percentage__list-label">${percentageFinal}%</span>
+        //         </li>`;
+        //         } 
+        //     });
+        //     percentageList += '</ul>';
+        //     segmentPercentages.innerHTML = percentageList;
+        //     labelElement.appendChild(segmentPercentages);
+        // }
 
         holder.appendChild(labelElement);
       });

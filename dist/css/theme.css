@@ -16,27 +16,51 @@ body {
       position: relative;
       text-decoration: none; }
       .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__value {
-        margin-top: 10px; }
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        padding-right: 12px; }
       .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__realized__value {
         font-size: 20px;
         color: #0a1420;
         line-height: 24px;
         margin-bottom: 6px;
-        font-weight: 600; }
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: space-between; }
       .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__projected__value {
-        font-size: 20px;
+        font-size: 12px;
         color: #8f8f8f;
         line-height: 24px;
         margin-bottom: 6px;
-        font-weight: 600; }
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: space-between; }
       .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .projected__value-1 {
         display: none; }
       .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .percentage__label-1 {
         display: none; }
+      .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .realized__value-1 {
+        justify-content: flex-end;
+        min-height: 54px; }
+        .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .realized__value-1 span:first-child {
+          display: none; }
+        .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .realized__value-1 span {
+          margin-top: auto; }
       .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__title {
         font-size: 16px;
         font-weight: 600;
         line-height: 19px; }
+      .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__status_pass {
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 14px;
+        display: flex;
+        align-items: center;
+        color: #8f8f8f;
+        padding-bottom: 12px; }
       .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label-color-1 {
         color: #f28f6b; }
       .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label-color-2 {
@@ -91,7 +115,6 @@ body {
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__title {
           font-size: 14px; }
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__realized__value,
-        .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__projected__value,
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__percentage {
           font-size: 18px; }
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .svg-funnel-js__subLabel--title {
@@ -104,7 +127,6 @@ body {
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__title {
           font-size: 14px !important; }
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__realized__value,
-        .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__projected__value,
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__percentage {
           font-size: 18px; }
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__segment-percentages {
@@ -125,7 +147,6 @@ body {
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__title {
           font-size: 14px !important; }
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__realized__value,
-        .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__projected__value,
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__percentage {
           font-size: 16px !important; }
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__percentage {
@@ -232,7 +253,7 @@ body {
       line-height: 22px;
       font-weight: 500; }
       .svg-funnel-js .svg-funnel-js__subLabels .svg-funnel-js__subLabel:not(:first-child) {
-        margin-left: 16px; }
+        margin-right: 16px; }
       .svg-funnel-js .svg-funnel-js__subLabels .svg-funnel-js__subLabel .svg-funnel-js__subLabel--color {
         width: 24px;
         height: 24px;
