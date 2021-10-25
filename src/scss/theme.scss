@@ -40,6 +40,9 @@ body {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        .label-fixo {
+          font-size: 14px;
+        }
       }
 
       .label__projected__value {

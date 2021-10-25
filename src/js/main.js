@@ -203,6 +203,7 @@ class FunnelGraph {
 
 
             const spanProjected1 = document.createElement('span');
+            spanProjected1.setAttribute('class', 'label-fixo');
             const spanProjected2 = document.createElement('span');
 
             const valueNumber2 = this.is2d() ? this.values_label[index][0] : '';
@@ -218,9 +219,10 @@ class FunnelGraph {
             realizedValue.setAttribute('class', `label__realized__value realized__value-${index + 1}`);
 
             const spanRealized1 = document.createElement('span');
+            spanRealized1.setAttribute('class', 'label-fixo');
             const spanRealized2 = document.createElement('span');
 
-            const valueNumber1 = this.is2d() ? this.values_label[index][1] : this.values_label[index][0];
+            const valueNumber1 = this.is2d() ? this.values_label[index][1] : this.values_label[index];
             spanRealized1.textContent = 'Alcançado:';
             spanRealized2.textContent = formatNumber(valueNumber1);
 
@@ -244,9 +246,9 @@ class FunnelGraph {
             labelElement.appendChild(passadoPor);
             labelElement.appendChild(title);
             labelElement.appendChild(value);
-            // if (this.displayPercent) {
-            //     labelElement.appendChild(percentageValue);
-            // }
+            if (this.displayPercent) {
+                labelElement.appendChild(percentageValue);
+            }
 
             // if (this.is2d()) {
             //     const segmentPercentages = document.createElement('div');

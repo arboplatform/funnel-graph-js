@@ -348,6 +348,7 @@ function () {
         var projectedValue = document.createElement('div');
         projectedValue.setAttribute('class', "label__projected__value projected__value-".concat(index + 1));
         var spanProjected1 = document.createElement('span');
+        spanProjected1.setAttribute('class', 'label-fixo');
         var spanProjected2 = document.createElement('span');
         var valueNumber2 = _this.is2d() ? _this.values_label[index][0] : '';
 
@@ -361,8 +362,9 @@ function () {
         var realizedValue = document.createElement('div');
         realizedValue.setAttribute('class', "label__realized__value realized__value-".concat(index + 1));
         var spanRealized1 = document.createElement('span');
+        spanRealized1.setAttribute('class', 'label-fixo');
         var spanRealized2 = document.createElement('span');
-        var valueNumber1 = _this.is2d() ? _this.values_label[index][1] : _this.values_label[index][0];
+        var valueNumber1 = _this.is2d() ? _this.values_label[index][1] : _this.values_label[index];
         spanRealized1.textContent = 'Alcançado:';
         spanRealized2.textContent = (0, _number.formatNumber)(valueNumber1);
         realizedValue.appendChild(spanRealized1);
@@ -380,10 +382,11 @@ function () {
         value.appendChild(realizedValue);
         labelElement.appendChild(passadoPor);
         labelElement.appendChild(title);
-        labelElement.appendChild(value); // if (this.displayPercent) {
-        //     labelElement.appendChild(percentageValue);
-        // }
-        // if (this.is2d()) {
+        labelElement.appendChild(value);
+
+        if (_this.displayPercent) {
+          labelElement.appendChild(percentageValue);
+        } // if (this.is2d()) {
         //     const segmentPercentages = document.createElement('div');
         //     segmentPercentages.setAttribute('class', 'label__segment-percentages');
         //     let percentageList = '<ul class="segment-percentage__list">';
@@ -412,6 +415,7 @@ function () {
         //     segmentPercentages.innerHTML = percentageList;
         //     labelElement.appendChild(segmentPercentages);
         // }
+
 
         holder.appendChild(labelElement);
       });
