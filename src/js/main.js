@@ -27,6 +27,7 @@ class FunnelGraph {
         this.subLabelValue = options.subLabelValue || 'percent';
         this.status_leads = options.data.status_leads || [];
         this.projetado = options.data.projetado || [];
+        this.tipo_negocio = options.data.tipo_negocio || '';
     }
 
 
@@ -179,11 +180,23 @@ class FunnelGraph {
                 .replace('calendar_date_end', 'updatedAt_fim')
                 .replace(/(\d{2})-(\d{2})-(\d{4})/, '$1/$2/$3');
 
+                let interesse = '';
+
+                if (this.tipo_negocio) {
+                    if (this.tipo_negocio === 1) interesse = '&tipo_interesse.label=Venda';
+                    else if (this.tipo_negocio === 2) interesse = '&tipo_interesse=2&tipo_interesse.label=Locação';
+                    else if (this.tipo_negocio === 3) interesse = '&tipo_interesse=3&tipo_interesse.label=Venda e Locação';
+                }
+
                 if (filter) {
                     filter += `&forceallleads=true&from=dashboard&cliente_interessado_passou_pelo_status=${this.status_leads[index]}&cliente_interessado_passou_pelo_status.label=${this.labels[index]}`;
                 } else {
-                    filter = `&forceallleads=true&from=dashboard&cliente_interessado_passou_pelo_status=${this.status_leads[index]}&cliente_interessado_passou_pelo_status.label=${this.labels[index]}`;
+                    filter = `&forceallleads=true&from=dashboard&cliente_interessado_passou_pelo_status=${this.status_leads[index]}&cliente_interessado_passou_pelo_status.label=${this.labels[index]}` ;
                 }
+
+
+
+                if (interesse) filter += interesse;
 
                 window.location.href = `${window.location.origin}/app/clientesinteressados?filter=${filter}`;
             }

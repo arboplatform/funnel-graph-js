@@ -19,7 +19,8 @@ body {
         margin-top: 10px;
         display: flex;
         flex-direction: column;
-        padding-right: 12px; }
+        padding-right: 12px;
+        min-height: 60px; }
       .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__realized__value {
         font-size: 20px;
         color: #0a1420;
@@ -28,7 +29,8 @@ body {
         font-weight: 600;
         display: flex;
         align-items: center;
-        justify-content: space-between; }
+        justify-content: space-between;
+        margin-top: auto; }
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__realized__value .label-fixo {
           font-size: 14px; }
       .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__projected__value {
@@ -45,8 +47,7 @@ body {
       .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .percentage__label-1 {
         display: none; }
       .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .realized__value-1 {
-        justify-content: flex-end;
-        min-height: 54px; }
+        justify-content: flex-end; }
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .realized__value-1 span:first-child {
           display: none; }
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .realized__value-1 span {
@@ -167,7 +168,7 @@ body {
       .svg-funnel-js .svg-funnel-js__labels .label__value {
         margin-top: 6px; } }
   .svg-funnel-js:not(.svg-funnel-js--vertical) {
-    padding-top: 105px;
+    padding-top: 146px;
     padding-bottom: 16px; }
     .svg-funnel-js:not(.svg-funnel-js--vertical) .svg-funnel-js__label {
       padding-left: 16px; }
@@ -179,7 +180,7 @@ body {
     @media (max-width: 1280px) and (min-width: 1025px) {
       .svg-funnel-js:not(.svg-funnel-js--vertical) .svg-funnel-js__label {
         padding-left: 9px; } }
-    @media (max-width: 1024px) and (min-width: 600pc) {
+    @media (max-width: 1024px) and (min-width: 600px) {
       .svg-funnel-js:not(.svg-funnel-js--vertical) .svg-funnel-js__label {
         padding-bottom: 12px !important;
         padding-top: 12px !important; }

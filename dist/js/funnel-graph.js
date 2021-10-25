@@ -181,6 +181,7 @@ function () {
     this.subLabelValue = options.subLabelValue || 'percent';
     this.status_leads = options.data.status_leads || [];
     this.projetado = options.data.projetado || [];
+    this.tipo_negocio = options.data.tipo_negocio || '';
   }
   /**
   An example of a two-dimensional funnel graph
@@ -327,6 +328,11 @@ function () {
         labelElement.onclick = function () {
           var filter = window.location.search.replace('?filter=', '');
           filter = filter.replace(/imb_id/g, 'imobiliaria').replace(/tpng_id/g, 'tipo_interesse').replace('tmstmpopt', 'filterdate').replace('calendar_date_init', 'updatedAt_ini').replace('calendar_date_end', 'updatedAt_fim').replace(/(\d{2})-(\d{2})-(\d{4})/, '$1/$2/$3');
+          var interesse = '';
+
+          if (_this.tipo_negocio) {
+            if (_this.tipo_negocio === 1) interesse = '&tipo_interesse.label=Venda';else if (_this.tipo_negocio === 2) interesse = '&tipo_interesse=2&tipo_interesse.label=Locação';else if (_this.tipo_negocio === 3) interesse = '&tipo_interesse=3&tipo_interesse.label=Venda e Locação';
+          }
 
           if (filter) {
             filter += "&forceallleads=true&from=dashboard&cliente_interessado_passou_pelo_status=".concat(_this.status_leads[index], "&cliente_interessado_passou_pelo_status.label=").concat(_this.labels[index]);
@@ -334,6 +340,7 @@ function () {
             filter = "&forceallleads=true&from=dashboard&cliente_interessado_passou_pelo_status=".concat(_this.status_leads[index], "&cliente_interessado_passou_pelo_status.label=").concat(_this.labels[index]);
           }
 
+          if (interesse) filter += interesse;
           window.location.href = "".concat(window.location.origin, "/app/clientesinteressados?filter=").concat(filter);
         };
 
