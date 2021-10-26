@@ -149,9 +149,13 @@ body {
       @media (max-width: 600px) and (min-width: 320px) {
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__title {
           font-size: 14px !important; }
+        .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__status_pass {
+          padding-bottom: 6px; }
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__realized__value,
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__percentage {
           font-size: 16px !important; }
+        .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__realized__value .label-fixo {
+          font-size: 12px; }
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__percentage {
           margin-top: 4px;
           line-height: 14px;
@@ -167,6 +171,21 @@ body {
           margin-left: 50%; }
       .svg-funnel-js .svg-funnel-js__labels .label__value {
         margin-top: 6px; } }
+  @media (max-width: 1024px) {
+    .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__value {
+      min-height: 42px; }
+      .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__value .label__projected__value,
+      .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__value .label__realized__value {
+        line-height: 15px; } }
+  @media (max-width: 1024px) and (min-width: 900px) {
+    .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__value {
+      width: 17%; } }
+  @media (max-width: 899px) and (min-width: 600px) {
+    .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__value {
+      width: 20%; } }
+  @media (max-width: 599px) and (min-width: 401px) {
+    .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__value {
+      width: 40%; } }
   .svg-funnel-js:not(.svg-funnel-js--vertical) {
     padding-top: 146px;
     padding-bottom: 16px; }
@@ -248,7 +267,8 @@ body {
     left: 0;
     padding: 14px 0;
     margin-top: 20px;
-    flex-direction: row-reverse; }
+    flex-direction: row-reverse;
+    display: none; }
     .svg-funnel-js .svg-funnel-js__subLabels .svg-funnel-js__subLabel {
       display: flex;
       font-size: 18px;
