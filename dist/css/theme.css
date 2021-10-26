@@ -182,7 +182,7 @@ body {
   @media (max-width: 1024px) {
     .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__value {
       min-height: 42px;
-      width: 45%; }
+      width: 43%; }
       .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__value .label__projected__value,
       .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__value .label__realized__value {
         line-height: 15px; } }
