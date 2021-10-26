@@ -353,6 +353,9 @@ body {
       &:not(:first-child) {
         border-left: 2px solid $line;
       }
+      &:first-child {
+        padding-left: 0;
+      }
     }
 
     @media (max-width: 1440px) and (min-width: 1281px) {

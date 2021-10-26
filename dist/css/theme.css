@@ -202,6 +202,8 @@ body {
       padding-left: 16px; }
       .svg-funnel-js:not(.svg-funnel-js--vertical) .svg-funnel-js__label:not(:first-child) {
         border-left: 2px solid #ececec; }
+      .svg-funnel-js:not(.svg-funnel-js--vertical) .svg-funnel-js__label:first-child {
+        padding-left: 0; }
     @media (max-width: 1440px) and (min-width: 1281px) {
       .svg-funnel-js:not(.svg-funnel-js--vertical) .svg-funnel-js__label {
         padding-left: 12px; } }
