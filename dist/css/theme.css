@@ -34,7 +34,7 @@ body {
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__realized__value .label-fixo {
           font-size: 14px; }
       .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__projected__value {
-        font-size: 12px;
+        font-size: 14px;
         color: #8f8f8f;
         line-height: 24px;
         margin-bottom: 6px;
@@ -58,7 +58,7 @@ body {
         line-height: 19px; }
       .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__status_pass {
         font-weight: 600;
-        font-size: 12px;
+        font-size: 14px;
         line-height: 14px;
         display: flex;
         align-items: center;
@@ -116,10 +116,10 @@ body {
         opacity: 1; }
       @media (max-width: 1440px) and (min-width: 1281px) {
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__title {
-          font-size: 14px; }
+          font-size: 16px; }
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__realized__value,
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__percentage {
-          font-size: 18px; }
+          font-size: 20px; }
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .svg-funnel-js__subLabel--title {
           font-size: 16px; }
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__segment-percentages {
@@ -131,7 +131,11 @@ body {
           font-size: 14px !important; }
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__realized__value,
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__percentage {
-          font-size: 18px; }
+          font-size: 16px; }
+        .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label-fixo {
+          font-size: 12px; }
+        .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__status_pass {
+          font-size: 12px; }
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__segment-percentages {
           padding: 8px 12px !important; }
           .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__segment-percentages ul li {
@@ -156,12 +160,16 @@ body {
           font-size: 16px !important; }
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__realized__value .label-fixo {
           font-size: 12px; }
+        .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__projected__value {
+          font-size: 12px; }
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__percentage {
           margin-top: 4px;
           line-height: 14px;
           margin-bottom: 4px; }
         .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__value {
-          margin-top: 4px; } }
+          margin-top: 4px; }
+        .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__status_pass {
+          font-size: 12px; } }
     @media (max-width: 1024px) and (min-width: 650px) {
       .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label {
         padding-bottom: 10px !important;
@@ -173,7 +181,8 @@ body {
         margin-top: 6px; } }
   @media (max-width: 1024px) {
     .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__value {
-      min-height: 42px; }
+      min-height: 42px;
+      width: 45%; }
       .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__value .label__projected__value,
       .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__value .label__realized__value {
         line-height: 15px; } }

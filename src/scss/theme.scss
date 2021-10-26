@@ -48,7 +48,7 @@ body {
       }
 
       .label__projected__value {
-        font-size: 12px;
+        font-size: 14px;
         color: $gray;
         line-height: 24px;
         margin-bottom: 6px;
@@ -84,7 +84,7 @@ body {
 
       .label__status_pass {
         font-weight: 600;
-        font-size: 12px;
+        font-size: 14px;
         line-height: 14px;
         display: flex;
         align-items: center;
@@ -173,12 +173,12 @@ body {
 
       @media (max-width: 1440px) and (min-width: 1281px) {
         .label__title {
-          font-size: 14px;
+          font-size: 16px;
         }
         .label__realized__value,
         //.label__projected__value,
         .label__percentage {
-          font-size: 18px;
+          font-size: 20px;
         }
 
         .svg-funnel-js__subLabel--title {
@@ -203,7 +203,15 @@ body {
         .label__realized__value,
         //.label__projected__value,
         .label__percentage {
-          font-size: 18px;
+          font-size: 16px;
+        }
+
+        .label-fixo  {
+          font-size: 12px;
+        }
+
+        .label__status_pass {
+          font-size: 12px;
         }
 
         .label__segment-percentages {
@@ -247,10 +255,14 @@ body {
           font-size: 16px !important;
         }
 
-        .label__realized__value {
+        .label__realized__value{
           .label-fixo{
             font-size: 12px;
           }
+        }
+
+        .label__projected__value  {
+          font-size: 12px;
         }
         .label__percentage {
           margin-top: 4px;
@@ -260,6 +272,9 @@ body {
 
         .label__value {
           margin-top: 4px;
+        }
+        .label__status_pass {
+          font-size: 12px;
         }
       }
     }
@@ -286,6 +301,7 @@ body {
       .svg-funnel-js__label {
         .label__value {
           min-height: 42px;
+          width: 45%;
           .label__projected__value,
           .label__realized__value {
             line-height: 15px;
