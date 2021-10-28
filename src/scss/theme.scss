@@ -311,6 +311,16 @@ body {
     }
   }
 
+  @media (max-width: 400px) and (min-width: 390px) {
+    .svg-funnel-js__label {
+      .label__value {
+        width: 35%;
+      }
+    }
+  
+	}
+
+
   @media (max-width: 1024px) and (min-width: 900px){
     .svg-funnel-js__labels {
       .svg-funnel-js__label {
