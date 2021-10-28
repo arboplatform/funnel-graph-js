@@ -188,7 +188,7 @@ body {
         line-height: 15px; } }
   @media (max-width: 400px) and (min-width: 390px) {
     .svg-funnel-js .svg-funnel-js__label .label__value {
-      width: 35%; } }
+      width: 40%; } }
   @media (max-width: 1024px) and (min-width: 900px) {
     .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__value {
       width: 17%; } }
@@ -197,7 +197,7 @@ body {
       width: 20%; } }
   @media (max-width: 599px) and (min-width: 401px) {
     .svg-funnel-js .svg-funnel-js__labels .svg-funnel-js__label .label__value {
-      width: 40%; } }
+      width: 35%; } }
   .svg-funnel-js:not(.svg-funnel-js--vertical) {
     padding-top: 146px;
     padding-bottom: 16px; }
