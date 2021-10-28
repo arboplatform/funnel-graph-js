@@ -183,7 +183,7 @@ class FunnelGraph {
                 let interesse = '';
 
                 if (this.tipo_negocio) {
-                    if (this.tipo_negocio === 1) interesse = '&tipo_interesse.label=Venda';
+                    if (this.tipo_negocio === 1) interesse = '&tipo_interesse=1&tipo_interesse.label=Venda';
                     else if (this.tipo_negocio === 2) interesse = '&tipo_interesse=2&tipo_interesse.label=Locação';
                     else if (this.tipo_negocio === 3) interesse = '&tipo_interesse=3&tipo_interesse.label=Venda e Locação';
                 }
@@ -197,6 +197,7 @@ class FunnelGraph {
 
 
                 if (interesse) filter += interesse;
+
 
                 window.location.href = `${window.location.origin}/app/clientesinteressados?filter=${filter}`;
             }

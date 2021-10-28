@@ -331,7 +331,7 @@ function () {
           var interesse = '';
 
           if (_this.tipo_negocio) {
-            if (_this.tipo_negocio === 1) interesse = '&tipo_interesse.label=Venda';else if (_this.tipo_negocio === 2) interesse = '&tipo_interesse=2&tipo_interesse.label=Locação';else if (_this.tipo_negocio === 3) interesse = '&tipo_interesse=3&tipo_interesse.label=Venda e Locação';
+            if (_this.tipo_negocio === 1) interesse = '&tipo_interesse=1&tipo_interesse.label=Venda';else if (_this.tipo_negocio === 2) interesse = '&tipo_interesse=2&tipo_interesse.label=Locação';else if (_this.tipo_negocio === 3) interesse = '&tipo_interesse=3&tipo_interesse.label=Venda e Locação';
           }
 
           if (filter) {
