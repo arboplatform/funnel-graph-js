@@ -327,7 +327,7 @@ function () {
 
         labelElement.onclick = function () {
           var filter = window.location.search.replace('?filter=', '');
-          filter = filter.replace(/imb_id/g, 'imobiliaria').replace(/tpng_id/g, 'tipo_interesse').replace('tmstmpopt', 'filterdate').replace('calendar_date_init', 'updatedAt_ini').replace('calendar_date_end', 'updatedAt_fim').replace(/(\d{2})-(\d{2})-(\d{4})/, '$1/$2/$3');
+          filter = filter.replace(/imb_id/g, 'imobiliaria').replace(/tpng_id/g, 'tipo_interesse').replace('tmstmpopt', 'filterdate').replace(/crt_id/g, 'corretor').replace(/.label/g, '_label').replace('calendar_date_init', 'updatedAt_ini').replace('calendar_date_end', 'updatedAt_fim').replace(/(\d{2})-(\d{2})-(\d{4})/, '$1/$2/$3');
           var interesse = '';
 
           if (_this.tipo_negocio) {
